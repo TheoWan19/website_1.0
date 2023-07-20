@@ -44,10 +44,12 @@ INSTALLED_APPS = [
 
     #dependencies apps
     'tailwind',
+    'phonenumber_field',#app for mobile
 
     # tailwind apps
     'theme',
     'django_browser_reload'
+
 
     
 ]
@@ -60,6 +62,11 @@ INTERNAL_IPS = [
 
 # configuration to allow npm of nodejs
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+
+#configuation to authentication
+AUTH_USER_MODEL = 'authentication.User'
+LOGIN_REDIRECT_URL = 'customer-home'
+LOGIN_URL = 'login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
