@@ -3,7 +3,7 @@ from django.db import transaction
 from .models import User, Customer, Employee
 from django import forms
 from django.contrib.auth import get_user_model
-from phonenumber_field.widgets import PhoneNumberPrefixWidget
+from phonenumber_field.formfields import PhoneNumberField
 
 User = get_user_model()
 
@@ -32,15 +32,17 @@ class CustomerSignUpForm(UserCreationForm):
 		max_length=100,
 		required=True,
 		help_text='Enter First Name',
-		widget=formsTextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
+		widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
 		)
 
 	last_name = forms.CharField(
 		max_length=100,
 		required=True,
 		help_text='Enter Last Name',
-		widget=formsTextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
+		widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
 		)
+
+	mobile = PhoneNumberField()
 
 	gender = forms.ChoiceField(choices=GENDER_CHOICES)
 
@@ -63,10 +65,6 @@ class CustomerSignUpForm(UserCreationForm):
 	class Meta(UserCreationForm.Meta):
 		model = User
 
-		widgets = {
-			'mobile': PhoneNumberPrefixWidget(initial='US'),
-		}
-
 		fields = ['email', 'first_name', 'last_name', 'mobile', 'gender', 'birth_date', 'password1', 'password2', 'check']
 
 	@transaction.atomic
@@ -79,5 +77,6 @@ class CustomerSignUpForm(UserCreationForm):
 		return user	
 
 class LoginForm(AuthenticationForm):
-	email = forms.EmailField(widget=forms)
+	email = forms.CharField(widget=forms.TextInput())
+	password = forms.CharField(widget=forms.PasswordInput())
 	
