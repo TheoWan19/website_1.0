@@ -52,6 +52,7 @@ class User(AbstractUser):
 	
 
 class Customer(models.Model):
+	
 	MALE = 'MALE'
 	FEMALE = 'FEMALE'
 
@@ -65,7 +66,7 @@ class Customer(models.Model):
 	last_name = models.CharField(max_length=100)
 	mobile = PhoneNumberField(max_length=12, unique=True)
 	gender = models.CharField(max_length=6, choices=GENDER_CHOICES, verbose_name='Gender')
-	birth_day = models.DateField()
+	birth_date = models.DateField()
 	created_at = models.DateTimeField(default=timezone.now)	
 
 class Employee(models.Model):
